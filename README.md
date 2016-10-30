@@ -23,6 +23,14 @@ RUN yum install -y epel-release && \
     yum -y clean all
 ```
 
+After install new packages, clean the cache folder:
+
+```
+apt-get autoclean && apt-get --purge -y autoremove && \
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+```
+
+
 For more detailed information, see [container best practices](http://docs.projectatomic.io/container-best-practices/#_clear_packaging_caches_and_temporary_package_downloads).
 
 ### Minimizing number of layers
@@ -66,6 +74,10 @@ If a container only has one responsibility (which should in almost all cases inv
 If services need to share data, use shared volumes. Make sure that services are designed for concurrent data access (read and write).
 
 For more detailed information see [Manage data in containers](https://docs.docker.com/engine/tutorials/dockervolumes/).
+
+### Use variables, not files
+When possible, use environment variables instead of conf files. It will make your
+container more secure and easier to migrate.
 
 ## Docker registry
 ### Garbage collection
